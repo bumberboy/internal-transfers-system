@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Internal-Transfers-System
+  version: 1.0.0
+paths:
+  /accounts:
+    post:
+      summary: Create a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: integer
+                  format: int64
+                initial_balance:
+                  type: string
+              required:
+                - account_id
+                - initial_balance
+      responses:
+        '201':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /accounts/{account_id}:
+    get:
+      summary: Get account details
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Account details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account_id:
+                    type: integer
+                    format: int64
+                  balance:
+                    type: string
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /transactions:
+    post:
+      summary: Create a new transfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_account_id:
+                  type: integer
+                  format: int64
+                destination_account_id:
+                  type: integer
+                  format: int64
+                amount:
+                  type: string
+              required:
+                - source_account_id
+                - destination_account_id
+                - amount
+      responses:
+        '201':
+          description: Transfer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          format: int64
+        balance:
+          type: string
+    Transfer:
+      type: object
+      properties:
+        source_account_id:
+          type: integer
+          format: int64
+        destination_account_id:
+          type: integer
+          format: int64
+        amount:
+          type: string
