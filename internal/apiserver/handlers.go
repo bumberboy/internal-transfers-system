@@ -33,6 +33,7 @@ func (s *Server) CreateAccount(c *fiber.Ctx) error {
 		Balance: initialBalance,
 	}
 
+	// TechDebt: refactor into service layer
 	if err := s.DB.WithContext(c.Context()).Create(&newAccount).Error; err != nil {
 
 		if strings.Contains(err.Error(), "unique") {
@@ -47,6 +48,7 @@ func (s *Server) CreateAccount(c *fiber.Ctx) error {
 func (s *Server) GetAccount(c *fiber.Ctx) error {
 	accountID := c.Params("account_id")
 
+	// TechDebt: refactor into service layer
 	var account model.Account
 	if err := s.DB.WithContext(c.Context()).First(&account, "id = ?", accountID).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
