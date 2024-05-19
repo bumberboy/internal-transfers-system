@@ -31,7 +31,7 @@ This is a simple backend service to showcase financial transactions between acco
 
 1. Ensure app is running
 
-2. Open the `openapi.yaml` file in postman and set your baseUrl variable to localhost:8080. Or just run the following commands below:
+2. Open the `api/openapi.yaml` file in postman and set your baseUrl variable to localhost:8080. Or just run the following commands below:
 
 3. Create account A:
     ```shell
